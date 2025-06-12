@@ -2,7 +2,6 @@ package org.project.jobportal.model;
 
 import jakarta.persistence.*;
 import java.util.List;
-import org.project.jobportal.model.Job;
 
 @Entity
 public class Company {
@@ -18,5 +17,19 @@ public class Company {
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
     private List<Job> jobs;
 
-    // Getters, Setters, Constructors
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public String getWebsite() { return website; }
+    public void setWebsite(String website) { this.website = website; }
+
+    public List<Job> getJobs() { return jobs; }
+    public void setJobs(List<Job> jobs) { this.jobs = jobs; }
 }
