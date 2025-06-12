@@ -28,6 +28,4 @@ public class Job {
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
-
-    // Getters, Setters, Constructors
 }
