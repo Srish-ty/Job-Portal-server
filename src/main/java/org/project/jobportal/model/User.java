@@ -2,21 +2,21 @@ package org.project.jobportal.model;
 
 import jakarta.persistence.*;
 import java.util.List;
-import org.project.jobportal.model.Job;
 
 @Entity
-public class Company {
+@Table(name = "users") // avoid reserved keyword
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-    private String description;
-    private String website;
+    private String email;
+    private String resumeLink;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
-    private List<Job> jobs;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Application> applications;
 
     // Getters, Setters, Constructors
 }
