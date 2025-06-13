@@ -1,32 +1,27 @@
 package org.project.jobportal.service;
 
+import lombok.RequiredArgsConstructor;
 import org.project.jobportal.model.User;
-import org.project.jobportal.repository.UserRepository;
 import org.project.jobportal.request.LoginRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.project.jobportal.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired private UserRepository userRepo;
-    @Autowired private PasswordEncoder passwordEncoder;
-    @Autowired private JwtService jwtService;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public User registerUser(User user) {
+    public User signup(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepo.save(user);
+        return userRepository.save(user);
     }
 
-    public String loginUser(LoginRequest request) {
-        var user = userRepo.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
-        }
-
-        return jwtService.generateToken(user.getEmail());
+    public User login(LoginRequest loginRequest) {
+        return userRepository.findByEmail(loginRequest.getEmail())
+                .filter(user -> passwordEncoder.matches(loginRequest.getPassword(), user.getPassword()))
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
     }
 }
