@@ -30,5 +30,4 @@ public class Application {
     private LocalDateTime appliedAt;
     private String status;
 
-    // Getters, Setters, Constructors
 }
